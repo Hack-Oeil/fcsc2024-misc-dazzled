@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="fr">
+    <meta charset="UTF-8">
+    <!--Page Title-->
+    <title>Hack-Oeil - Les CTFs de Cyrhades</title>
+    <!--Meta Keywords and Description-->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="./assets/images/favicon.ico" title="Favicon" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./assets/css/github.min.css">
+    <script src="./assets/js/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Vérifie si la fenêtre est dans une iframe
+            if (window.self !== window.top) {
+                document.querySelectorAll('a').forEach((link) => {
+                    link.addEventListener('click', (event) => {
+                        const a = event.target.closest('a[href^="http"]');
+                        if (a) {
+                            event.preventDefault();
+                            window.parent.postMessage({
+                                type: "open-external",
+                                url: a.href
+                            }, "*");
+                        }
+                    });
+                });
+            }
+            // Active la coloration syntaxique :
+            if (window.hljs) {
+                hljs.highlightAll();
+            } else {
+                console.error("Highlight.js non chargé !");
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <!--Main Content Area-->
+        <main id="content">
+            <!--Ctf-->
+            <section class="ctf scrollto">
+                <article class="row clearfix">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h3>Challenge #477</h3>
+                            <h2 class="section-title">Dazzled</h2>
+                            <p>
+                                Une éclairagiste vous met au défi de reconstituer une animation d’un spectacle stockée
+                                sur son enregistreur DMX. Elle vous informe que cette fois elle a utilisé des
+                                projecteurs motorisés (exemple : <a target="_blank"
+                                    href="https://youtu.be/N-eTCKjO9xc">https://youtu.be/N-eTCKjO9xc</a>) pour dessiner
+                                des
+                                symboles sur une toile posée au sol.
+                                <br /><br />
+                                Vous réalisez alors une capture réseau (<code>capture.pcap</code>) en vous branchant en
+                                Ethernet sur son enregistreur.
+                                <br /><br />
+                                Pour vous aider, elle vous donne un extrait de la documentation d’un projecteur
+                                (<code>projector.pdf</code>) ainsi qu’un schéma de sa scène :
+                                <br /><br />
+                            <pre>=================================== Top view ===================================
+
+                                          0.57m
+                                       |-----------|
+            ._____.     ._____.     ._____.     ._____.
+            | 001 |     | 009 |     | 017 |     | 025 |  ---
+            |_____|     |_____|     |_____|     |_____|   |
+                                                          |
+                                                          | 0.67m
+            ._____.     ._____.     ._____.     ._____.   |
+            | 033 |     | 041 |     | 049 |     | 057 |  _|_
+            |_____|     |_____|     |_____|     |_____|
+
+
+            ._____.     ._____.     ._____.     ._____.
+            | 065 |     | 073 |     | 081 |     | 089 |
+            |_____|     |_____|     |_____|     |_____|
+
+
+            ._____.     ._____.     ._____.     ._____.
+            | 097 |     | 105 |     | 113 |     | 121 |
+            |_____|     |_____|     |_____|     |_____|
+
+
+
+
+================================== Front view ==================================
+
+(stage left)                                           (stage right)
+            ._____.     ._____.     ._____.     ._____.
+            |_097_|     |_105_|     |_113_|     |_121_|
+            |/   \|     |/   \|     |/   \|     |/   \|  ___
+             \_O_/       \_O_/       \_O_/       \_O_/    |
+                                                          |
+                                                          |
+                                                          |
+                                                          |
+                                                          |
+                                                          | Height: 2.8m
+                                                          |
+                                                          |
+                                                          |
+                                                          |
+                                                          |
+                                                          |
+          Spot size: ~16°                                 |
+                                                         _|_
+       -----------------------------------------------------------
+_______| praticable                                              |________</pre>
+                            <br />
+
+                            Releverez-vous le défi ?
+                            <br /><br />
+                            <strong>Notes :</strong><br />
+                            - 10 secondes après le début de l’animation, les projecteurs dessinent la lettre « F » au
+                            sol.<br />
+                            - “Spot size: ~16°” correspond à l’angle du cône créé par le faisceau lumineux d’un
+                            projecteur.<br />
+                            - Tous les projecteurs sont identiques, même orientation, ils ne sont que translatés l’un
+                            de l’autre (comme ce que ferait une régie sur une vraie scène pour se simplifier la
+                            vie).<br />
+                            - Nous vous conseillons de ne pas réimplémenter un moteur 3D.<br />
+                            - La capture réseau contient également un flux audio RTP qui ne fait pas partie de
+                            l’épreuve. Ce son permet de mieux profiter de l’animation une fois reconstituée.
+                            Une variante plus facile de cette épreuve est disponible : ```Illuminated```.
+                            </p>
+                            <h4>Fichiers à étudier</h4>
+                            <p>
+                                - capture.pcap<br />
+                                - projector.pdf
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="row clearfix">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h3>FCSC 2024</h3>
+                            <h2 class="section-title">Hackropole</h2>
+                            <p class="section-subtitle">
+                                Lien officiel :
+                                <a target="_blank"
+                                    href="https://hackropole.fr/fr/challenges/misc/fcsc2024-misc-dazzled/">FCSC
+                                    2024 -
+                                    Dazzled
+                                </a>
+                                <br />
+                                Auteur: erdnaxe
+                        </div>
+                    </div>
+                </article>
+
+                <article class="row clearfix">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h3>Apprentissage</h3>
+                            <h2 class="section-title">Documentations et Vidéos</h2>
+                            <p class="section-subtitle">
+                                Aucune documentation pour le moment
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="row clearfix">
+                    <div class="col-1">
+                        <div class="section-heading">
+                            <h3>Aide</h3>
+                            <h2 class="section-title">Conseils et indices</h2>
+                            <p class="section-subtitle">
+                                <a target="_blank"
+                                    href="https://discord.com/channels/1175764392307077120/1175764601716092948">Fil sur
+                                    le Discord</a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+            <!--End of Ctf-->
+        </main>
+        <!--End Main Content Area-->
+
+        <a id="scrollUp" href="#wrapper" style="position: fixed; z-index: 1000;"
+            aria-label="Remonter en haut de la page" title="Remonter en tête de site"></a>
+    </div>
+</body>
+
+</html>
